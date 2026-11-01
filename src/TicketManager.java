@@ -57,15 +57,15 @@ public class TicketManager {
     }
 
     public void deleteTicket(int ticketId){
-        for(int i = 0; i < tickets.size(); i++){
-            Ticket currentTicket = tickets.get(i);
-            if(currentTicket.getId() == ticketId){
-                tickets.remove(currentTicket);
-                System.out.println("Ticket " + ticketId + " has been deleted");
-                return;
-            }
+        
+        Ticket currentTicket = getTicketById(ticketId);
+        if(currentTicket == null){
+            System.out.println("\nTicket Id " + ticketId + " not found.");
+        } else{
+            tickets.remove(currentTicket);
+            System.out.println("\nTicket " + ticketId + " has been deleted.");
         }
-        System.out.println("Ticket ID " + ticketId + "  not found.");
+        
     }
     // Counts tickets in each status category 
     public int countTicketsByStatus(String status){
