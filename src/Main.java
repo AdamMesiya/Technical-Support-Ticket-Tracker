@@ -41,9 +41,14 @@ public class Main {
                         int deleteTicketID = readTicketId(scanner, "Enter the ID of the Ticket you want to delete: ");
                         manager.deleteTicket(deleteTicketID);
                         break;
-                    case 6:
 
-                    // Exit the program
+                    case 6:
+                        String keyword = readNonEmptyText(scanner,"Enter the title to search for: " , "title");
+                        manager.searchTicketByTitle(keyword);
+                        break;
+
+                    case 7:
+                        // Exit the program
                         running = false;
                         System.out.println("You have exited the program."); 
                         break;
@@ -63,7 +68,8 @@ public class Main {
         System.out.println("3. Find Ticket");
         System.out.println("4. Update Ticket Status");
         System.out.println("5. Delete Ticket");
-        System.out.println("6. Exit");
+        System.out.println("6. Search Tickets By Title");
+        System.out.println("7. Exit");
         System.out.print("\nEnter choice: ");
         
     }
@@ -74,10 +80,10 @@ public class Main {
         while(true){
             try{
                 choice = Integer.parseInt(scanner.nextLine());
-                if(choice <= 6 && choice >= 1){
+                if(choice <= 7 && choice >= 1){
                     return choice;
                 }
-                System.out.println("Choices are between 1 and 6.");
+                System.out.println("Choices are between 1 and 7.");
             }catch(NumberFormatException e){
                 System.out.println("Invalid Entry. Enter a number.");
             }

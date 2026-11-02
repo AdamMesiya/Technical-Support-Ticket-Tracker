@@ -88,4 +88,28 @@ public class TicketManager {
         }
         return null;
     }
+
+    public void searchTicketByTitle(String keyword){
+        ArrayList<Ticket> match = new ArrayList<>();
+        for(int i = 0; i < tickets.size(); i++){
+            Ticket currentTicket = tickets.get(i);
+            String title = currentTicket.getTitle();
+            if(title.toLowerCase().contains(keyword.toLowerCase())){
+                match.add(currentTicket);
+            }
+        }
+        if(match.isEmpty()){
+            System.out.println("\nTickets with the title " + keyword + " not found.");
+        }else{
+            System.out.println("\nSearch Results for: " + keyword);
+            System.out.println("Matching Tickets: " + match.size());
+            System.out.print("\n");
+            for(int i = 0; i < match.size(); i++){
+                Ticket matchingTicket = match.get(i);
+                matchingTicket.displayTicket();
+            }
+        }
+        
+    }
 }
+
