@@ -111,5 +111,26 @@ public class TicketManager {
         }
         
     }
+    public void searchTicketsByStatus(String status){
+        //Try to find a ticket by its status
+        ArrayList<Ticket>statusMatch = new ArrayList<>();
+        for(int i = 0; i < tickets.size(); i++){
+            Ticket currentTicket = tickets.get(i);
+            if(currentTicket.getStatus().equalsIgnoreCase(status)){
+                statusMatch.add(currentTicket);
+            }
+        } 
+        if(statusMatch.isEmpty()){
+            System.out.println("Tickets with the status " + status + " not found.");
+        }else{
+            System.out.println("\nSearch Results for Status: " + status);
+            System.out.print("Matching Tickets: " + statusMatch.size());
+            System.out.println("\n");
+            for(int i = 0; i < statusMatch.size(); i++){
+                Ticket ticketMatch = statusMatch.get(i);
+                ticketMatch.displayTicket();
+            }
+        }
+    }
 }
 

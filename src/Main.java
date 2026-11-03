@@ -32,7 +32,7 @@ public class Main {
                 // Update the status of a ticket using the ticket ID
                     case 4:
                         int ticketStatusID = readTicketId(scanner, "Enter the ID of the Ticket that you want to update the status for: ");
-                        String ticketStatusUpdate = readTicketStatus(scanner);
+                        String ticketStatusUpdate = readTicketStatus(scanner,"Enter the status change: ");
                         manager.updateTicketStatus(ticketStatusID, ticketStatusUpdate);
                         break;
                         
@@ -48,10 +48,16 @@ public class Main {
                         break;
 
                     case 7:
+                        String status = readTicketStatus(scanner,"Enter the status to search for: ");
+                        manager.searchTicketsByStatus(status);
+                        break;
+                        
+                    case 8:
                         // Exit the program
                         running = false;
                         System.out.println("You have exited the program."); 
                         break;
+
                     default:
                         System.out.println("Invalid choice. Please Try Again.");
                         break;
@@ -69,7 +75,8 @@ public class Main {
         System.out.println("4. Update Ticket Status");
         System.out.println("5. Delete Ticket");
         System.out.println("6. Search Tickets By Title");
-        System.out.println("7. Exit");
+        System.out.println("7. Search Tickets By Status");
+        System.out.println("8. Exit");
         System.out.print("\nEnter choice: ");
         
     }
@@ -80,10 +87,10 @@ public class Main {
         while(true){
             try{
                 choice = Integer.parseInt(scanner.nextLine());
-                if(choice <= 7 && choice >= 1){
+                if(choice <= 8 && choice >= 1){
                     return choice;
                 }
-                System.out.println("Choices are between 1 and 7.");
+                System.out.println("Choices are between 1 and 8.");
             }catch(NumberFormatException e){
                 System.out.println("Invalid Entry. Enter a number.");
             }
@@ -122,11 +129,11 @@ public class Main {
     
 
 
-    public static String readTicketStatus(Scanner scanner){
+    public static String readTicketStatus(Scanner scanner, String prompt){
         String ticketStatusUpdate;
         while(true){
-            System.out.print("Enter the status change: ");
-            ticketStatusUpdate = scanner.nextLine();
+            System.out.print(prompt);
+            ticketStatusUpdate = scanner.nextLine().trim();
             if(ticketStatusUpdate.equalsIgnoreCase("Open")){
                 return "Open";
             }
