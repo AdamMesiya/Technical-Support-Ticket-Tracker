@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Comparator;
 
 public class TicketManager {
 
@@ -21,6 +22,12 @@ public class TicketManager {
 
     }
 
+    public ArrayList<Ticket> getTicketsSortedById(){
+        ArrayList <Ticket> sortedTickets = new ArrayList<>(tickets.values());
+        sortedTickets.sort(Comparator.comparingInt(Ticket::getId));
+        return sortedTickets;
+    }
+
 // Method to view all Tickets in the tickets 
     public void viewAllTickets(){
     
@@ -32,8 +39,8 @@ public class TicketManager {
         System.out.println("Open Tickets: " + countTicketsByStatus("Open"));
         System.out.println("In Progress Tickets: " + countTicketsByStatus("In Progress"));
         System.out.println("Closed Tickets: " + countTicketsByStatus("Closed"));
-
-        for(Ticket currentTicket : tickets.values()){
+        ArrayList <Ticket> sortedTickets = getTicketsSortedById();
+        for(Ticket currentTicket : sortedTickets){
             currentTicket.displayTicket();
         }
     }
