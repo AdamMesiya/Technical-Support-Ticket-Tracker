@@ -1,23 +1,27 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TicketManager {
+
+
+    private HashMap <Integer, Ticket> tickets;
     
-    private ArrayList <Ticket> tickets;
     private int nextTicketId = 1;
 
     public TicketManager(){
-        this.tickets = new ArrayList<>();
+        this.tickets = new HashMap<>();
     }
-// Method to Add a ticket to the tickets arrayList
+
+// Method to Add a ticket to the tickets 
     public void addTicket(String title, String description){
         Ticket currentTicket = new Ticket(nextTicketId,title,description);    
-        this.tickets.add(currentTicket);
+        this.tickets.put(currentTicket.getId(),currentTicket);
         this.nextTicketId++;
         System.out.println("Ticket created " +"\nTicket ID: "+ currentTicket.getId());
 
     }
 
-// Method to view all Tickets in the tickets arrayList
+// Method to view all Tickets in the tickets 
     public void viewAllTickets(){
     
     if(tickets.isEmpty()){
@@ -28,10 +32,9 @@ public class TicketManager {
         System.out.println("Open Tickets: " + countTicketsByStatus("Open"));
         System.out.println("In Progress Tickets: " + countTicketsByStatus("In Progress"));
         System.out.println("Closed Tickets: " + countTicketsByStatus("Closed"));
-        for(int i = 0; i <= tickets.size() - 1; i++){
-            Ticket currentTicket = tickets.get(i);
+
+        for(Ticket currentTicket : tickets.values()){
             currentTicket.displayTicket();
-           
         }
     }
     }
@@ -55,14 +58,14 @@ public class TicketManager {
             System.out.println("Ticket " + ticketId + " status has been changed.");
         }
     }
-
+    // Changed method to use HashMap
     public void deleteTicket(int ticketId){
         
         Ticket currentTicket = getTicketById(ticketId);
         if(currentTicket == null){
             System.out.println("\nTicket Id " + ticketId + " not found.");
         } else{
-            tickets.remove(currentTicket);
+            tickets.remove(ticketId);
             System.out.println("\nTicket " + ticketId + " has been deleted.");
         }
         
@@ -70,29 +73,23 @@ public class TicketManager {
     // Counts tickets in each status category 
     public int countTicketsByStatus(String status){
         int count = 0;
-        for(int i = 0; i < tickets.size(); i++){
-            if(tickets.get(i).getStatus().equals(status)){
+        for(Ticket currentTicket : tickets.values()){
+            if(currentTicket.getStatus().equals(status)){
                 count ++;
             }
         }
         return count;
     }
-
+   // Get the ticket from Id entry
     public Ticket getTicketById(int ticketId){
-        for(int i = 0; i < tickets.size(); i++){
-            Ticket currentTicket = tickets.get(i);
-            if(currentTicket.getId() == ticketId){
-                return currentTicket;
-            }
-            
-        }
-        return null;
+        return tickets.get(ticketId);
     }
 
+    
     public void searchTicketByTitle(String keyword){
         ArrayList<Ticket> match = new ArrayList<>();
-        for(int i = 0; i < tickets.size(); i++){
-            Ticket currentTicket = tickets.get(i);
+
+        for(Ticket currentTicket : tickets.values()){
             String title = currentTicket.getTitle();
             if(title.toLowerCase().contains(keyword.toLowerCase())){
                 match.add(currentTicket);
@@ -114,12 +111,12 @@ public class TicketManager {
     public void searchTicketsByStatus(String status){
         //Try to find a ticket by its status
         ArrayList<Ticket>statusMatch = new ArrayList<>();
-        for(int i = 0; i < tickets.size(); i++){
-            Ticket currentTicket = tickets.get(i);
+
+        for(Ticket currentTicket : tickets.values()){
             if(currentTicket.getStatus().equalsIgnoreCase(status)){
                 statusMatch.add(currentTicket);
             }
-        } 
+        }
         if(statusMatch.isEmpty()){
             System.out.println("Tickets with the status " + status + " not found.");
         }else{
