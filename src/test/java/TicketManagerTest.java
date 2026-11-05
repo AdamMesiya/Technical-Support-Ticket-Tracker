@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.ArrayList;
 
 public class TicketManagerTest {
     // Test: 03
@@ -120,6 +121,28 @@ public class TicketManagerTest {
 
         assertNotNull(result);
         assertEquals("Wifi Issue",result.getTitle());
+
+    }
+
+    // Test: 11
+    @Test
+    void testGetTicketsSortedById(){
+        TicketManager manager = new TicketManager();
+        manager.addTicket("Wifi Issue","Wifi not connecting");
+        manager.addTicket("Printer Issue", "Printer not connecting");
+        manager.addTicket("Computer Issue","Computer freezing");
+
+        manager.deleteTicket(2);
+
+        manager.addTicket("Printer Issue","Printer is not printing");
+        ArrayList <Ticket> sortedTickets = manager.getTicketsSortedById();
+
+        // Checking if the arraySize is correct
+        assertEquals(3,sortedTickets.size());
+        // Checking if the tickets are in the sorted order based of ID
+        assertEquals(1,sortedTickets.get(0).getId());
+        assertEquals(3,sortedTickets.get(1).getId());
+        assertEquals(4,sortedTickets.get(2).getId());
 
     }
 }
