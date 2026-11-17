@@ -1,10 +1,14 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.sql.SQLException;
 public class Main {
     public static void main(String[] args){
         
         TicketManager manager = new TicketManager();
         Scanner scanner = new Scanner(System.in);
         TicketConsoleUI consoleUI = new TicketConsoleUI(scanner);
+        TicketRepository repository = new TicketRepository();
+        String password = System.getenv("DB_PASSWORD");
         boolean running = true;
         while(running){
             // Choices for Technical Support Ticket Tracker
@@ -17,13 +21,18 @@ public class Main {
                         
                         String ticketTitle = consoleUI.readNonEmptyText("Enter Ticket Title: ", "title");
                         
-                        String ticketDescription = consoleUI.readNonEmptyText("Enter Ticket Description: ", "description");
-                    
+                        String ticketDescription = consoleUI.readNonEmptyText("Enter Ticket Description: ", "description"); 
                         manager.addTicket(ticketTitle,ticketDescription);
                         break;
                 // View all tickets
                     case 2:
-                        manager.viewAllTickets();
+                        //manager.viewAllTickets();
+                        try {
+                            ArrayList<Ticket> tickets = repository.viewAllTickets(password);
+                            consoleUI.displayTickets(tickets);
+                        } catch(SQLException e){
+                            System.out.println("Database error: " + e.getMessage());
+                        }
                         break;
                 // Search for a ticket using the ticket ID
                     case 3:

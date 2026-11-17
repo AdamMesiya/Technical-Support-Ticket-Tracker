@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
 
 public class TicketConsoleUI{
     private Scanner scanner;
@@ -59,6 +59,7 @@ public class TicketConsoleUI{
     }
 
     public String readNonEmptyText(String prompt, String type){
+        // Variable to store the entry input within the method
         String checkString;
         while(true){
             System.out.print(prompt);
@@ -91,6 +92,16 @@ public class TicketConsoleUI{
             System.out.println("Invalid Status. Use Open , In Progress, or Closed for this program");
         }
         
+    }
+
+    public void displayTickets(ArrayList<Ticket>tickets){
+        if(tickets.isEmpty()){
+            System.out.println("No Tickets found");
+        }else{
+            for(Ticket currentTicket: tickets){
+                currentTicket.displayTicket();
+            }
+        }
     }
 
 
