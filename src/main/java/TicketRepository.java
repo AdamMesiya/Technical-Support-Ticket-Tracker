@@ -126,4 +126,49 @@ public class TicketRepository{
                 }
             }
     }
+
+    public ArrayList<Ticket> searchTicketsByTitle(String keyword, String password)throws SQLException{
+        
+        String sql = "SELECT * FROM tickets WHERE title ILIKE ? ORDER BY id";
+        ArrayList<Ticket> ticketsFoundList = new ArrayList<>();
+
+        try(Connection connection = DatabaseConnection.getConnection(password);
+            PreparedStatement statement = connection.prepareStatement(sql)){
+                statement.setString(1,"%" + keyword + "%");
+                try(ResultSet resultSet = statement.executeQuery()){
+                   while(resultSet.next()){
+                    int id = resultSet.getInt("id");
+                    String title = resultSet.getString("title");
+                    String description = resultSet.getString("description");
+                    String status = resultSet.getString("status");
+                    Ticket ticket = new Ticket(id,title,description,status);
+                    ticketsFoundList.add(ticket);
+                   }
+                }
+                return ticketsFoundList;
+            }
+
+       
+    }
+
+    public ArrayList<Ticket> searchTicketsByStatus(String searchStatus, String password)throws SQLException{
+        String sql = "SELECT * FROM tickets WHERE status = ? ORDER BY id";
+        ArrayList<Ticket> statusTicketsFoundList = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection(password);
+            PreparedStatement statement = connection.prepareStatement(sql)){
+                statement.setString(1, searchStatus);
+                try(ResultSet resultSet = statement.executeQuery()){
+                    while(resultSet.next()){
+                        int id = resultSet.getInt("id");
+                        String title = resultSet.getString("title");
+                        String description = resultSet.getString("description");
+                        String status = resultSet.getString("status");
+                        Ticket ticket = new Ticket(id,title,description,status);
+                        statusTicketsFoundList.add(ticket);
+                    }
+                }
+                return statusTicketsFoundList;
+            }
+       
+    } 
 }
