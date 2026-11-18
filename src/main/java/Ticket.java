@@ -12,6 +12,13 @@ public class Ticket {
         this.status = "Open";
     }
 
+    public Ticket(int id, String title, String description, String status){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
     public int getId(){
         return this.id;
     }
