@@ -40,7 +40,6 @@ public class Ticket {
     }
 
     public void displayTicket(){
-        System.out.println("---------------------");
         System.out.println("Ticket ID: " + this.id);
         System.out.println("Title: " + this.title);
         System.out.println("Description: " + this.description);
